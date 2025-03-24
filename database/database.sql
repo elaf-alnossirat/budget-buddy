@@ -49,3 +49,80 @@ mysql> DESCRIBE transactions;
 
 mysql>
 mysql> DESCRIBE transactions;DESCRIBE transactions;DESCRIBE transactions;DESCRIBE transactions;DESCRIBE transactions;   
+
+
+
+
+mysql> SHOW TABLES;
++------------------------+
+| Tables_in_budget_buddy |
++------------------------+
+| alerts                 |
+| monthly_summary        |
+| transactions           |
+| user_balances          |
+| users                  |
++------------------------+
+5 rows in set (0.01 sec)
+
+mysql> DESCRIBE users;
++---------------+---------------+------+-----+---------+----------------+
+| Field         | Type          | Null | Key | Default | Extra          |
++---------------+---------------+------+-----+---------+----------------+
+| id            | int           | NO   | PRI | NULL    | auto_increment |
+| first_name    | varchar(50)   | NO   |     | NULL    |                |
+| last_name     | varchar(50)   | NO   |     | NULL    |                |
+| email         | varchar(100)  | NO   | UNI | NULL    |                |
+| password_hash | varchar(255)  | NO   |     | NULL    |                |
+| balance       | decimal(10,2) | NO   |     | 0.00    |                |
++---------------+---------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> DESCRIBE user_balances;
++---------+---------------+------+-----+---------+-------+
+| Field   | Type          | Null | Key | Default | Extra |
++---------+---------------+------+-----+---------+-------+
+| user_id | int           | NO   | PRI | NULL    |       |
+| balance | decimal(10,2) | NO   |     | 0.00    |       |
++---------+---------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> DESCRIBE transactions;
++-------------+-----------------------------------------+------+-----+---------+----------------+
+| Field       | Type                                    | Null | Key | Default | Extra          |
++-------------+-----------------------------------------+------+-----+---------+----------------+
+| id          | int                                     | NO   | PRI | NULL    | auto_increment |
+| user_id     | int                                     | NO   | MUL | NULL    |                |
+| reference   | varchar(100)                            | NO   |     | NULL    |                |
+| description | text                                    | YES  |     | NULL    |                |
+| amount      | decimal(10,2)                           | NO   |     | NULL    |                |
+| date        | date                                    | NO   |     | NULL    |                |
+| type        | enum('deposit','withdrawal','transfer') | NO   |     | NULL    |                |
+| category    | varchar(50)                             | YES  |     | NULL    |                |
++-------------+-----------------------------------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> DESCRIBE monthly_summary;
++-------------------+---------------+------+-----+---------+-------+
+| Field             | Type          | Null | Key | Default | Extra |
++-------------------+---------------+------+-----+---------+-------+
+| user_id           | int           | NO   |     | NULL    |       |
+| month             | varchar(7)    | YES  |     | NULL    |       |
+| total_deposits    | decimal(32,2) | YES  |     | NULL    |       |
+| total_withdrawals | decimal(32,2) | YES  |     | NULL    |       |
+| total_transfers   | decimal(32,2) | YES  |     | NULL    |       |
+| net_balance       | decimal(32,2) | YES  |     | NULL    |       |
++-------------------+---------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> DESCRIBE alerts;
++------------+--------------------+------+-----+-------------------+-------------------+
+| Field      | Type               | Null | Key | Default           | Extra             |
++------------+--------------------+------+-----+-------------------+-------------------+
+| id         | int                | NO   | PRI | NULL              | auto_increment    |
+| user_id    | int                | NO   | MUL | NULL              |                   |
+| message    | text               | NO   |     | NULL              |                   |
+| created_at | timestamp          | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
+| status     | enum('new','read') | YES  |     | new               |                   |
++------------+--------------------+------+-----+-------------------+-------------------+
+5 rows in set (0.00 sec)
