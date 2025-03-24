@@ -1,8 +1,7 @@
-# main.py
-import tkinter as tk
+import ttkbootstrap as tb
 from ui.login_ui import LoginUI
 
 if __name__ == "__main__":
-    root = tk.Tk()
-    login_ui = LoginUI(root)
+    root = tb.Window(themename="superhero")  # ✅ important
+    LoginUI(root)
     root.mainloop()
